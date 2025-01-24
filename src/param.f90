@@ -6,9 +6,9 @@ module param
     !! C0_IMAG：計算の中心となる複素数の虚部
     !! CALC_RANGE：中心から±CALC_RANGEの範囲だけ計算する
     real(real64), parameter :: &
-    C0_REAL = 0, &
+    C0_REAL = -0.743, &
     C0_IMAG = 0.1145, &
-    CALC_RANGE =0.003
+    CALC_RANGE = 0.003
 
     !! N_MAX：計算回数の上限
     !! NUM_STEP：

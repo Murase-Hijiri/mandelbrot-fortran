@@ -14,17 +14,36 @@ program main
     
     allocate(div_speed_map(NUM_STEP, NUM_STEP))
     
-    c_real = C0_REAL
-    c_imag = C0_IMAG
-    c_inc = 2.0 * CALC_RANGE / NUM_STEP
+    c_inc = 2 * CALC_RANGE / NUM_STEP
 
+    c_real = C0_REAL - CALC_RANGE
     do i = 1, NUM_STEP
+        c_imag = C0_IMAG - CALC_RANGE
         do j = 1, NUM_STEP
             div_speed_map(j, i) = div_speed(c_real, c_imag)
             c_imag = c_imag + c_inc
         end do
         c_real = c_real + c_inc
     end do
+
+block
+    integer(int32) :: unit_num
+
+    open(newunit=unit_num, file="./data/plot.dat", status="replace")
+
+    c_real = C0_REAL - CALC_RANGE
+    do i = 1, NUM_STEP
+        c_imag = C0_IMAG - CALC_RANGE
+        do j = 1, NUM_STEP
+            write (unit_num, '(3e20.7)') c_real, c_imag, div_speed_map(j, i)
+            c_imag = c_imag + c_inc
+        end do
+        write (unit_num, *)
+        c_real = c_real + c_inc
+    end do
+    close(unit_num)
+
+end block
 
     deallocate(div_speed_map)
 
